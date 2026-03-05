@@ -256,4 +256,14 @@ footer p,a{
     font-size:28px;
   }
 
+
+}
+
+.top-bar{
+  background:#050814;
+  padding:10px 8%;
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  color:#ffd700;
 }

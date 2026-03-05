@@ -2,64 +2,1251 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HSV Trading Technologies</title>
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e5a;
+    --green-light: #22c46e;
+    --green-glow: rgba(26,158,90,0.15);
+    --dark: #0d0d0d;
+    --dark2: #161616;
+    --dark3: #1e1e1e;
+    --gray: #2a2a2a;
+    --text: #e8e8e8;
+    --text-muted: #888;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26,158,90,0.15);
+  }
+
+  .navbar {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, filter 0.2s;
+    filter: drop-shadow(0 4px 12px rgba(26,158,90,0.4));
+  }
+
+  .logo:hover .logo-icon {
+    transform: scale(1.07);
+    filter: drop-shadow(0 6px 18px rgba(34,196,110,0.55));
+  }
+
+  nav.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  nav.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  nav.nav-links a:hover, nav.nav-links a.active {
+    color: var(--white);
+    background: rgba(26,158,90,0.12);
+  }
+
+  nav.nav-links a.active { color: var(--green-light); }
+
+  .mobile-menu {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    padding-top: 68px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  /* Animated background grid */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,158,90,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,158,90,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+  }
+
+  @keyframes gridMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  /* Green glow blob */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 10%; left: 55%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(26,158,90,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,158,90,0.1);
+    border: 1px solid rgba(26,158,90,0.3);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--green-light);
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green-light);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 .highlight {
+    color: var(--green-light);
+    position: relative;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 460px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-primary:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,158,90,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--gray);
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--green);
+    color: var(--green-light);
+  }
+
+  /* Chart Visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: floatCard 4s ease-in-out infinite;
+  }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .chart-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px; color: var(--white); }
+  .chart-tag {
+    background: rgba(26,158,90,0.15);
+    color: var(--green-light);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  /* SVG Chart */
+  .chart-svg {
+    width: 100%;
+    height: 120px;
+  }
+
+  .chart-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .stat-box {
+    background: var(--dark3);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-box .val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--green-light);
+  }
+
+  .stat-box .lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* Mini floating cards */
+  .float-card {
+    position: absolute;
+    background: var(--dark2);
+    border: 1px solid rgba(26,158,90,0.2);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .float-card.top-left {
+    top: -20px; left: -30px;
+    animation: floatCard2 3s ease-in-out infinite;
+  }
+
+  .float-card.bottom-right {
+    bottom: -10px; right: -20px;
+    animation: floatCard2 3.5s ease-in-out infinite reverse;
+  }
+
+  @keyframes floatCard2 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .float-card .fc-label { color: var(--text-muted); font-size: 10px; }
+  .float-card .fc-val { color: var(--green-light); font-weight: 700; font-size: 14px; margin-top: 2px; }
+
+  /* ===== TICKER ===== */
+  .ticker-bar {
+    background: var(--dark2);
+    border-top: 1px solid rgba(26,158,90,0.1);
+    border-bottom: 1px solid rgba(26,158,90,0.1);
+    overflow: hidden;
+    padding: 10px 0;
+  }
+
+  .ticker-inner {
+    display: flex;
+    animation: tickerScroll 25s linear infinite;
+    width: max-content;
+  }
+
+  .ticker-item {
+    padding: 0 32px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .ticker-item .pair { color: var(--white); font-weight: 600; font-size: 13px; }
+  .ticker-item .up { color: var(--green-light); }
+  .ticker-item .down { color: #e05252; }
+
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 80px 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 3.5vw, 40px);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 52px;
+  }
+
+  /* ===== SERVICES GRID ===== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: rgba(26,158,90,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .svc-icon {
+    width: 44px; height: 44px;
+    background: rgba(26,158,90,0.12);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 18px;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover .svc-icon { background: rgba(26,158,90,0.22); }
+
+  .svc-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .svc-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ===== STATS ===== */
+  .stats-wrapper {
+    background: var(--dark2);
+    border-top: 1px solid rgba(26,158,90,0.08);
+    border-bottom: 1px solid rgba(26,158,90,0.08);
+    padding: 60px 24px;
+  }
+
+  .stats-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    background: var(--dark2);
+    padding: 44px 40px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--green-light);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .stat-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* ===== TRADING CATEGORIES ===== */
+  .trade-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+
+  .trade-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .trade-card:hover {
+    border-color: rgba(26,158,90,0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+
+  .trade-visual {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Different bg per card */
+  .trade-card:nth-child(1) .trade-visual { background: linear-gradient(135deg, #1a1200, #332400); }
+  .trade-card:nth-child(2) .trade-visual { background: linear-gradient(135deg, #001a0d, #003319); }
+  .trade-card:nth-child(3) .trade-visual { background: linear-gradient(135deg, #1a0a00, #331400); }
+  .trade-card:nth-child(4) .trade-visual { background: linear-gradient(135deg, #00101a, #001e33); }
+  .trade-card:nth-child(5) .trade-visual { background: linear-gradient(135deg, #0d001a, #1a0033); }
+
+  .trade-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,158,90,0.15);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trade-card:hover .trade-overlay { opacity: 1; }
+
+  .trade-btn {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .trade-info {
+    padding: 16px;
+  }
+
+  .trade-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .trade-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ===== AI SECTION ===== */
+  .ai-section {
+    background: linear-gradient(135deg, var(--dark) 0%, rgba(26,158,90,0.04) 100%);
+    border-top: 1px solid rgba(26,158,90,0.08);
+    border-bottom: 1px solid rgba(26,158,90,0.08);
+    padding: 80px 24px;
+  }
+
+  .ai-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .ai-points {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .ai-point {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .ai-num {
+    width: 32px; height: 32px;
+    min-width: 32px;
+    background: rgba(26,158,90,0.12);
+    border: 1px solid rgba(26,158,90,0.25);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--green-light);
+  }
+
+  .ai-point-text {
+    font-size: 14.5px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    padding-top: 4px;
+  }
+
+  /* AI Bot Visual */
+  .ai-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .bot-card {
+    background: var(--dark2);
+    border: 1px solid rgba(26,158,90,0.15);
+    border-radius: 20px;
+    padding: 32px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(26,158,90,0.1);
+    animation: floatCard 5s ease-in-out infinite;
+  }
+
+  .bot-head {
+    font-size: 72px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .bot-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .bot-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--green-light);
+  }
+
+  .bot-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green-light);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  .bot-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .bot-metric {
+    background: var(--dark3);
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .bot-metric .bm-val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--green-light);
+  }
+
+  .bot-metric .bm-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* Orbiting rings */
+  .orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(26,158,90,0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 12s linear infinite;
+  }
+
+  .orbit-1 { width: 360px; height: 360px; }
+  .orbit-2 { width: 440px; height: 440px; animation-direction: reverse; animation-duration: 18s; }
+
+  @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 24px 28px;
+  }
+
+  .footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 12px 0 20px;
+    max-width: 260px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-info a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .contact-info a:hover { color: var(--green-light); }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 18px;
+  }
+
+  .footer-col a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--green-light); }
+
+  .footer-bottom {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .trade-grid { grid-template-columns: repeat(2, 1fr); }
+    .ai-inner { grid-template-columns: 1fr; }
+    .ai-visual { display: none; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    nav.nav-links { display: none; }
+    nav.nav-links.open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--dark2); padding: 20px; gap: 8px; border-bottom: 1px solid var(--gray); }
+    .mobile-menu { display: block; }
+    .trade-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header>
-    <div class="navbar">
-        <div class="logo">
-            <img src="images/logo.png" alt="Logo">
-            <h2>HSV TRADING TECHNOLOGIES</h2>
-        </div>
-        <div class="mobile-menu">☰</div>
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="services.html">Services</a>
-            <a href="pricing.html">Pricing</a>
-            <a href="forecasts.html">Forecasts</a>
-            <a href="support.html">Support</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </div>
+  <div class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background shape -->
+          <rect width="52" height="52" rx="10" fill="#0d6e3d"/>
+          <rect width="52" height="52" rx="10" fill="url(#logoGrad)"/>
+          <!-- Diagonal shine -->
+          <path d="M8 0 L22 0 L0 22 L0 8 Z" fill="rgba(255,255,255,0.08)"/>
+          <!-- H letter -->
+          <text x="5" y="36" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="white" letter-spacing="-1">H</text>
+          <!-- SV smaller -->
+          <text x="28" y="28" font-family="Arial Black, sans-serif" font-weight="900" font-size="15" fill="#a8f0c8">SV</text>
+          <!-- small underline accent -->
+          <rect x="28" y="31" width="18" height="2.5" rx="1.2" fill="#22c46e" opacity="0.7"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="52" y2="52">
+              <stop offset="0%" stop-color="#22c46e" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </a>
+    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="forecasts.html">Forecasts</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-<div>
-<h1>Trade Smarter With HSV</h1>
-<p>Premium forex, gold, crypto and AI trading systems.</p>
-<button class="btn btn-primary">Join Now</button>
-<button class="btn btn-secondary">Explore Services</button>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">AI-Powered Trading · Live Markets</div>
+      <h1>Trade Smarter<br>With <span class="highlight">HSV</span></h1>
+      <p>Premium Forex, Gold, Crypto and AI trading signals. Backed by deep research reports and machine learning to grow your wealth.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Get Started Free</button>
+        <button class="btn-secondary">Explore Services →</button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="float-card top-left">
+        <div class="fc-label">BTC / USD</div>
+        <div class="fc-val">↑ $67,420</div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Portfolio Performance</div>
+          <div class="chart-tag">+12.4% this week</div>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 400 120" fill="none">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a9e5a" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#1a9e5a" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <!-- Area fill -->
+          <path d="M0,90 C30,85 60,70 90,72 C120,74 150,55 180,50 C210,45 240,60 270,48 C300,36 330,30 360,20 L400,15 L400,120 L0,120 Z" fill="url(#chartGrad)"/>
+          <!-- Line -->
+          <path d="M0,90 C30,85 60,70 90,72 C120,74 150,55 180,50 C210,45 240,60 270,48 C300,36 330,30 360,20 L400,15" stroke="#22c46e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Dot at end -->
+          <circle cx="400" cy="15" r="5" fill="#22c46e"/>
+          <circle cx="400" cy="15" r="10" fill="rgba(34,196,110,0.2)"/>
+        </svg>
+        <div class="chart-stats">
+          <div class="stat-box"><div class="val">99.4%</div><div class="lbl">Accuracy</div></div>
+          <div class="stat-box"><div class="val">$40M+</div><div class="lbl">Invested</div></div>
+          <div class="stat-box"><div class="val">5K+</div><div class="lbl">Clients</div></div>
+        </div>
+      </div>
+
+      <div class="float-card bottom-right">
+        <div class="fc-label">XAU / USD</div>
+        <div class="fc-val" style="color:#f0b429">↑ $2,038</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner" id="ticker">
+    <div class="ticker-item"><span class="pair">EUR/USD</span> <span class="up">↑ 1.0842</span></div>
+    <div class="ticker-item"><span class="pair">GBP/USD</span> <span class="up">↑ 1.2714</span></div>
+    <div class="ticker-item"><span class="pair">XAU/USD</span> <span class="up">↑ 2,038.4</span></div>
+    <div class="ticker-item"><span class="pair">BTC/USD</span> <span class="up">↑ 67,420</span></div>
+    <div class="ticker-item"><span class="pair">ETH/USD</span> <span class="up">↑ 3,512</span></div>
+    <div class="ticker-item"><span class="pair">USD/JPY</span> <span class="down">↓ 151.28</span></div>
+    <div class="ticker-item"><span class="pair">SPX500</span> <span class="up">↑ 5,123</span></div>
+    <div class="ticker-item"><span class="pair">NASDAQ</span> <span class="up">↑ 18,230</span></div>
+    <!-- duplicated for seamless scroll -->
+    <div class="ticker-item"><span class="pair">EUR/USD</span> <span class="up">↑ 1.0842</span></div>
+    <div class="ticker-item"><span class="pair">GBP/USD</span> <span class="up">↑ 1.2714</span></div>
+    <div class="ticker-item"><span class="pair">XAU/USD</span> <span class="up">↑ 2,038.4</span></div>
+    <div class="ticker-item"><span class="pair">BTC/USD</span> <span class="up">↑ 67,420</span></div>
+    <div class="ticker-item"><span class="pair">ETH/USD</span> <span class="up">↑ 3,512</span></div>
+    <div class="ticker-item"><span class="pair">USD/JPY</span> <span class="down">↓ 151.28</span></div>
+    <div class="ticker-item"><span class="pair">SPX500</span> <span class="up">↑ 5,123</span></div>
+    <div class="ticker-item"><span class="pair">NASDAQ</span> <span class="up">↑ 18,230</span></div>
+  </div>
 </div>
-</section>
 
-<section class="section">
-<h2 class="section-title">Trading Categories</h2>
-<div class="cards">
-<div class="card">Forex</div>
-<div class="card">Gold</div>
-<div class="card">Crypto</div>
-<div class="card">Portfolio Management</div>
+<!-- SERVICES -->
+<div style="background: var(--dark);">
+  <div class="section">
+    <div class="section-label">What We Provide</div>
+    <h2 class="section-title">Our Core Services</h2>
+    <p class="section-sub">Everything you need to trade smarter — from AI-driven signals to expert consultation and real-time market insights.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="svc-icon">🤝</div>
+        <div class="svc-title">PERSONAL SUPPORT</div>
+        <div class="svc-desc">We are always happy to provide extensive help and support to our clients. Trade ideas, market analysis, and query resolution.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">📊</div>
+        <div class="svc-title">RESEARCH REPORTS</div>
+        <div class="svc-desc">Receive AI-based crypto and forex signal ideas backed with comprehensive research reports and technical data.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🔭</div>
+        <div class="svc-title">EXPLORE</div>
+        <div class="svc-desc">Learn from experienced traders and begin your trading journey with guided exploration of real markets.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🤖</div>
+        <div class="svc-title">CONSULTATION</div>
+        <div class="svc-desc">Get consultation from our AI-based BOTS and receive accurate market status and portfolio suggestions.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">📈</div>
+        <div class="svc-title">MARKET ANALYSIS</div>
+        <div class="svc-desc">Get detailed market analysis and precise statistical information powered by deep AI analysis systems.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">⚙️</div>
+        <div class="svc-title">TECHNICAL ANALYSIS</div>
+        <div class="svc-desc">We predict future market trends using past data with the most reliable Machine Learning tools available.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">💡</div>
+        <div class="svc-title">INVESTMENT INSIGHTS</div>
+        <div class="svc-desc">Accurate investment insights delivered directly from market experts for more concise and profitable trading.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">⚡</div>
+        <div class="svc-title">AUTOMATED STRATEGIES</div>
+        <div class="svc-desc">Tailored automated strategies deliver impeccable in-and-out trade timing so clients can maximize profits.</div>
+      </div>
+    </div>
+  </div>
 </div>
-</section>
 
-<section class="section">
-<h2 class="section-title">AI Trading Solutions</h2>
-<div class="card">AI trading placeholder section</div>
-</section>
+<!-- STATS -->
+<div class="stats-wrapper">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-number" id="c1">0+</div>
+      <div class="stat-label">Countries</div>
+      <div class="stat-desc">Global reach across 150+ countries with full regulatory compliance and market access.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="c2">0k+</div>
+      <div class="stat-label">Active Clients</div>
+      <div class="stat-desc">Over $40M invested through our platform by 5000+ active clients worldwide.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="c3">0+</div>
+      <div class="stat-label">Awards</div>
+      <div class="stat-desc">Recognized globally for innovation, reliability and outstanding trading performance.</div>
+    </div>
+  </div>
+</div>
 
+<!-- THINGS WE TRADE -->
+<div style="background: var(--dark);">
+  <div class="section">
+    <div class="section-label">Markets</div>
+    <h2 class="section-title">Things We Trade</h2>
+    <p class="section-sub">Access multiple asset classes through a single intelligent platform.</p>
+    <div class="trade-grid">
+
+      <div class="trade-card">
+        <div class="trade-visual">
+          ₿
+          <div class="trade-overlay"><button class="trade-btn">Start Trading</button></div>
+        </div>
+        <div class="trade-info">
+          <div class="trade-name">Crypto Trading</div>
+          <div class="trade-desc">Trade digital assets securely, anytime, anywhere.</div>
+        </div>
+      </div>
+
+      <div class="trade-card">
+        <div class="trade-visual">
+          💱
+          <div class="trade-overlay"><button class="trade-btn">Start Trading</button></div>
+        </div>
+        <div class="trade-info">
+          <div class="trade-name">Forex Trading</div>
+          <div class="trade-desc">Exchange global currencies anytime, anywhere.</div>
+        </div>
+      </div>
+
+      <div class="trade-card">
+        <div class="trade-visual">
+          🥇
+          <div class="trade-overlay"><button class="trade-btn">Start Trading</button></div>
+        </div>
+        <div class="trade-info">
+          <div class="trade-name">Gold / COMEX</div>
+          <div class="trade-desc">Access precious metals and commodities markets.</div>
+        </div>
+      </div>
+
+      <div class="trade-card">
+        <div class="trade-visual">
+          📉
+          <div class="trade-overlay"><button class="trade-btn">Start Trading</button></div>
+        </div>
+        <div class="trade-info">
+          <div class="trade-name">Indices Trading</div>
+          <div class="trade-desc">Track and trade top market indices worldwide.</div>
+        </div>
+      </div>
+
+      <div class="trade-card">
+        <div class="trade-visual">
+          🧠
+          <div class="trade-overlay"><button class="trade-btn">Start Trading</button></div>
+        </div>
+        <div class="trade-info">
+          <div class="trade-name">AI Trading</div>
+          <div class="trade-desc">Automate trading strategies with smart AI bots.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- AI SECTION -->
+<div class="ai-section">
+  <div class="ai-inner">
+    <div>
+      <div class="section-label">AI Excellence</div>
+      <h2 class="section-title">Delivering Excellence<br>Using AI Analysis</h2>
+      <p class="section-sub" style="margin-bottom: 36px;">Our systems combine cutting-edge machine learning with years of market expertise to give you an unmatched edge.</p>
+      <div class="ai-points">
+        <div class="ai-point">
+          <div class="ai-num">1</div>
+          <div class="ai-point-text">Delivers <strong style="color:var(--white)">99.4% accurate</strong> market insight — the highest among peers, boosting confident wealth creation.</div>
+        </div>
+        <div class="ai-point">
+          <div class="ai-num">2</div>
+          <div class="ai-point-text">Machine Learning with Reinforcement Learning to ascertain the best trading strategies for every market condition.</div>
+        </div>
+        <div class="ai-point">
+          <div class="ai-num">3</div>
+          <div class="ai-point-text">Deployed ML bots provide the most accurate market insights and relative portfolio suggestions in real-time.</div>
+        </div>
+        <div class="ai-point">
+          <div class="ai-num">4</div>
+          <div class="ai-point-text">AI performs historical, current, and predictive analysis — helping you invest in the right asset at exactly the right time.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-visual">
+      <div class="orbit orbit-1"></div>
+      <div class="orbit orbit-2"></div>
+      <div class="bot-card">
+        <span class="bot-head">🤖</span>
+        <div class="bot-name">HSV AI Bot</div>
+        <div class="bot-status">Live & Analyzing</div>
+        <div class="bot-metrics">
+          <div class="bot-metric"><div class="bm-val">99.4%</div><div class="bm-lbl">Accuracy</div></div>
+          <div class="bot-metric"><div class="bm-val">24/7</div><div class="bm-lbl">Active</div></div>
+          <div class="bot-metric"><div class="bm-val">5K+</div><div class="bm-lbl">Users</div></div>
+          <div class="bot-metric"><div class="bm-val">$40M</div><div class="bm-lbl">Managed</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-<div>Quick Links</div>
-<div>Services</div>
-<div>Contact Placeholder</div>
-<div class="ticker">
-EUR/USD ↑ 1.08 | GBP/USD ↑ 1.27 | XAU/USD ↑ 2032 | BTC/USD ↑ 67200
-</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom: 0;">
+        <div class="logo-icon">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="52" height="52" rx="10" fill="#0d6e3d"/>
+            <rect width="52" height="52" rx="10" fill="url(#logoGrad2)"/>
+            <path d="M8 0 L22 0 L0 22 L0 8 Z" fill="rgba(255,255,255,0.08)"/>
+            <text x="5" y="36" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="white" letter-spacing="-1">H</text>
+            <text x="28" y="28" font-family="Arial Black, sans-serif" font-weight="900" font-size="15" fill="#a8f0c8">SV</text>
+            <rect x="28" y="31" width="18" height="2.5" rx="1.2" fill="#22c46e" opacity="0.7"/>
+            <defs>
+              <linearGradient id="logoGrad2" x1="0" y1="0" x2="52" y2="52">
+                <stop offset="0%" stop-color="#22c46e" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </a>
+      <p>Premium AI-powered trading signals for Forex, Gold, Crypto and Indices. Your wealth, amplified.</p>
+      <div class="contact-info">
+        <a href="tel:+447455873054">📞 +44 7455 873054</a>
+        <a href="mailto:info@hsvtrading.com">✉️ info@hsvtrading.com</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Crypto Signals</a>
+      <a href="#">Forex Signals</a>
+      <a href="#">Gold / COMEX</a>
+      <a href="#">AI Bot</a>
+      <a href="#">Portfolio Mgmt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Education</h4>
+      <a href="#">Crypto Basics</a>
+      <a href="#">Advanced Crypto</a>
+      <a href="#">Forex Basics</a>
+      <a href="#">Forex Pro</a>
+      <a href="#">Track Records</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HSV Trading Technologies. All rights reserved.</span>
+    <span style="color: rgba(255,255,255,0.3)">Made with ❤️</span>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Counter animation
+  function animateCounter(el, target, suffix, duration) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const interval = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        el.textContent = target + suffix;
+        clearInterval(interval);
+      } else {
+        el.textContent = Math.floor(start) + suffix;
+      }
+    }, 16);
+  }
+
+  // Intersection Observer for counters
+  const statsSection = document.querySelector('.stats-wrapper');
+  let animated = false;
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !animated) {
+      animated = true;
+      animateCounter(document.getElementById('c1'), 150, '+', 1500);
+      animateCounter(document.getElementById('c2'), 5, 'k+', 1200);
+      animateCounter(document.getElementById('c3'), 10, '+', 1000);
+    }
+  }, { threshold: 0.3 });
+
+  if (statsSection) observer.observe(statsSection);
+</script>
+
 </body>
 </html>

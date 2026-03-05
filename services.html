@@ -2,31 +2,1189 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Services | HSV Trading Technologies</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services – HSV Trading Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e5a;
+    --green-light: #22c46e;
+    --green-glow: rgba(26,158,90,0.15);
+    --dark: #0d0d0d;
+    --dark2: #161616;
+    --dark3: #1e1e1e;
+    --gray: #2a2a2a;
+    --text: #e8e8e8;
+    --text-muted: #888;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26,158,90,0.15);
+  }
+
+  .navbar {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, filter 0.2s;
+    filter: drop-shadow(0 4px 12px rgba(26,158,90,0.4));
+  }
+
+  .logo:hover .logo-icon {
+    transform: scale(1.07);
+    filter: drop-shadow(0 6px 18px rgba(34,196,110,0.55));
+  }
+
+  nav.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  nav.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  nav.nav-links a:hover, nav.nav-links a.active {
+    color: var(--white);
+    background: rgba(26,158,90,0.12);
+  }
+
+  nav.nav-links a.active { color: var(--green-light); }
+
+  .mobile-menu {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  /* ===== PAGE HERO ===== */
+  .page-hero {
+    padding-top: 68px;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(26,158,90,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,158,90,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,158,90,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .page-hero-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 24px 50px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--green-light); }
+  .breadcrumb span { color: var(--green-light); }
+
+  .page-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+
+  .page-hero h1 .highlight { color: var(--green-light); }
+
+  .page-hero p {
+    font-size: 15.5px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ===== CATEGORY TABS ===== */
+  .tabs-wrapper {
+    background: var(--dark2);
+    border-bottom: 1px solid rgba(26,158,90,0.1);
+    position: sticky;
+    top: 68px;
+    z-index: 100;
+  }
+
+  .tabs-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-inner::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    padding: 16px 24px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active {
+    color: var(--green-light);
+    border-bottom-color: var(--green-light);
+  }
+
+  /* ===== PLAN SECTIONS ===== */
+  .plans-section {
+    padding: 60px 24px 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: none;
+  }
+
+  .plans-section.active { display: block; }
+
+  /* Sub-tabs (Spot / HODL / Future) */
+  .subtabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .subtab-btn {
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 1px solid var(--gray);
+    background: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .subtab-btn:hover { border-color: var(--green); color: var(--white); }
+  .subtab-btn.active {
+    background: rgba(26,158,90,0.12);
+    border-color: var(--green);
+    color: var(--green-light);
+  }
+
+  /* Sub-plan panels */
+  .subpanel { display: none; }
+  .subpanel.active { display: block; }
+
+  /* ===== PRICING CARDS ===== */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .plan-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .plan-card:hover {
+    border-color: rgba(26,158,90,0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+
+  .plan-card.featured {
+    border-color: rgba(26,158,90,0.35);
+    box-shadow: 0 0 40px rgba(26,158,90,0.1);
+  }
+
+  .plan-card.featured .plan-header {
+    background: linear-gradient(135deg, rgba(26,158,90,0.2), rgba(26,158,90,0.05));
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--green);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .plan-header {
+    padding: 28px 28px 20px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .plan-tier {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--green-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .plan-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .plan-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Price rows */
+  .price-rows {
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--dark3);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .price-row:hover { background: rgba(26,158,90,0.08); }
+
+  .price-row .period {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .price-row .amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--green-light);
+  }
+
+  .price-row .amount sup {
+    font-size: 12px;
+    font-weight: 600;
+    vertical-align: top;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  /* Features */
+  .plan-features {
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .feature-item .check {
+    width: 18px; height: 18px;
+    min-width: 18px;
+    background: rgba(26,158,90,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: var(--green-light);
+    margin-top: 1px;
+  }
+
+  .feature-item strong { color: var(--white); }
+
+  /* CTA Button */
+  .plan-cta {
+    padding: 20px 28px 28px;
+  }
+
+  .btn-plan {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-plan-primary {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .btn-plan-primary:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,158,90,0.35);
+  }
+
+  .btn-plan-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--gray);
+  }
+
+  .btn-plan-outline:hover {
+    border-color: var(--green);
+    color: var(--green-light);
+  }
+
+  /* ===== NEWSLETTER BANNER ===== */
+  .newsletter-banner {
+    background: linear-gradient(135deg, rgba(26,158,90,0.08), rgba(26,158,90,0.02));
+    border: 1px solid rgba(26,158,90,0.15);
+    border-radius: 18px;
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin: 0 24px 80px;
+    max-width: 1252px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .newsletter-text p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-form input {
+    background: var(--dark3);
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    width: 260px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .newsletter-form input:focus { border-color: var(--green); }
+  .newsletter-form input::placeholder { color: var(--text-muted); }
+
+  .newsletter-form button {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s;
+  }
+
+  .newsletter-form button:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,158,90,0.3);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 24px 28px;
+  }
+
+  .footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 12px 0 20px;
+    max-width: 260px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-info a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .contact-info a:hover { color: var(--green-light); }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 18px;
+  }
+
+  .footer-col a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--green-light); }
+
+  .footer-bottom {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 900px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .newsletter-banner { flex-direction: column; padding: 32px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    nav.nav-links { display: none; }
+    nav.nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 68px; left: 0; right: 0;
+      background: var(--dark2); padding: 20px; gap: 8px;
+      border-bottom: 1px solid var(--gray);
+    }
+    .mobile-menu { display: block; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .newsletter-form input { width: 100%; }
+    .newsletter-form { width: 100%; }
+    .newsletter-form button { width: 100%; }
+  }
+</style>
 </head>
 <body>
 
-<header> ... same header ... </header>
+<!-- NAVBAR -->
+<header>
+  <div class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius: 10px; object-fit: contain;">
+      </div>
+    </a>
+    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="forecasts.html">Forecasts</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<section class="section">
-<h2 class="section-title">Services</h2>
-<div class="cards">
-<div class="card">Forex Signals</div>
-<div class="card">Gold Signals</div>
-<div class="card">Crypto Signals</div>
-<div class="card">Funded Account Guidance</div>
-<div class="card">Portfolio Management</div>
-<div class="card">Copy Trading</div>
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Services</span>
+    </div>
+    <h1>Our <span class="highlight">Services</span></h1>
+    <p>Choose your trading plan — from beginner-friendly signals to professional AI-powered strategies across Crypto, Forex, Bots and more.</p>
+  </div>
 </div>
-</section>
 
+<!-- CATEGORY TABS -->
+<div class="tabs-wrapper">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('crypto', this)">₿ Crypto</button>
+    <button class="tab-btn" onclick="switchTab('forex', this)">💱 Forex</button>
+    <button class="tab-btn" onclick="switchTab('bot', this)">🤖 Bot</button>
+    <button class="tab-btn" onclick="switchTab('customized', this)">⚙️ Customized</button>
+  </div>
+</div>
+
+<!-- ==================== CRYPTO ==================== -->
+<div class="plans-section active" id="tab-crypto">
+  <!-- Sub-tabs -->
+  <div class="subtabs">
+    <button class="subtab-btn active" onclick="switchSubtab('crypto', 'spot', this)">Spot</button>
+    <button class="subtab-btn" onclick="switchSubtab('crypto', 'hodl', this)">HODL</button>
+    <button class="subtab-btn" onclick="switchSubtab('crypto', 'future', this)">Future</button>
+  </div>
+
+  <!-- SPOT -->
+  <div class="subpanel active" id="crypto-spot">
+    <div class="plans-grid">
+
+      <!-- Beginner -->
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Starter</div>
+          <div class="plan-name">Beginner</div>
+          <div class="plan-tagline">Perfect for those just entering the crypto market</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="period">Weekly Pack</span>
+            <span class="amount"><sup>$</sup>99</span>
+          </div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 6% &nbsp;|&nbsp; <strong>Target 2:</strong> 8% &nbsp;|&nbsp; SL: 6%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>5 to 7 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>2–3 Signals per week</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via <strong>Telegram</strong></span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via <strong>WhatsApp</strong></span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        </div>
+        <div class="plan-cta">
+          <button class="btn-plan btn-plan-outline">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Intermediate -->
+      <div class="plan-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="plan-header">
+          <div class="plan-tier">Growth</div>
+          <div class="plan-name">Intermediate</div>
+          <div class="plan-tagline">For traders ready to scale up their game</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="period">Monthly Pack</span>
+            <span class="amount"><sup>$</sup>199</span>
+          </div>
+          <div class="price-row">
+            <span class="period">Quarterly Pack</span>
+            <span class="amount"><sup>$</sup>399</span>
+          </div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 10% &nbsp;|&nbsp; <strong>Target 2:</strong> 15% &nbsp;|&nbsp; SL: 10%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>7 to 10 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>10–12 Signals per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via <strong>Telegram</strong></span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via <strong>WhatsApp</strong></span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        </div>
+        <div class="plan-cta">
+          <button class="btn-plan btn-plan-primary">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- Pro -->
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Professional</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-tagline">Full-suite access for serious traders</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="period">3 Months</span>
+            <span class="amount"><sup>$</sup>699</span>
+          </div>
+          <div class="price-row">
+            <span class="period">6 Months</span>
+            <span class="amount"><sup>$</sup>999</span>
+          </div>
+          <div class="price-row">
+            <span class="period">1 Year</span>
+            <span class="amount"><sup>$</sup>1,499</span>
+          </div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 15% &nbsp;|&nbsp; <strong>Target 2:</strong> 22% &nbsp;|&nbsp; SL: 15%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>7 to 10 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>10–12 Signals per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>CMT Certified Research Analyst</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Technical Research Reports on Coins</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via <strong>Telegram & WhatsApp</strong></span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        </div>
+        <div class="plan-cta">
+          <button class="btn-plan btn-plan-outline">Buy Now</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HODL -->
+  <div class="subpanel" id="crypto-hodl">
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Starter</div>
+          <div class="plan-name">Beginner HODL</div>
+          <div class="plan-tagline">Long-term holding strategy for steady growth</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row">
+            <span class="period">Monthly Pack</span>
+            <span class="amount"><sup>$</sup>129</span>
+          </div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 20–30% &nbsp;|&nbsp; SL: 10%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>30–90 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>4–6 HODL picks per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="featured-badge">Best Value</div>
+        <div class="plan-header">
+          <div class="plan-tier">Growth</div>
+          <div class="plan-name">Intermediate HODL</div>
+          <div class="plan-tagline">Research-backed long-term positions</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row"><span class="period">Quarterly Pack</span><span class="amount"><sup>$</sup>299</span></div>
+          <div class="price-row"><span class="period">6 Months</span><span class="amount"><sup>$</sup>499</span></div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 40–60% &nbsp;|&nbsp; SL: 15%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>60–180 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>6–8 HODL picks per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Research Reports Included</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-primary">Buy Now</button></div>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Professional</div>
+          <div class="plan-name">Pro HODL</div>
+          <div class="plan-tagline">Elite analyst-curated long-term portfolio</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row"><span class="period">6 Months</span><span class="amount"><sup>$</sup>799</span></div>
+          <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>1,299</span></div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 100%+ &nbsp;|&nbsp; SL: 20%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>180–365 days holding period</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>CMT Certified Analyst Coverage</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Detailed coin research reports</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Market Expert Support 24/7</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUTURE -->
+  <div class="subpanel" id="crypto-future">
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Starter</div>
+          <div class="plan-name">Beginner Futures</div>
+          <div class="plan-tagline">Low-risk futures signals for new traders</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row"><span class="period">Weekly Pack</span><span class="amount"><sup>$</sup>119</span></div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 5% &nbsp;|&nbsp; <strong>Target 2:</strong> 8% &nbsp;|&nbsp; SL: 5%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>2–3 Futures signals per week</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Low leverage guidance (2x–5x)</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="plan-header">
+          <div class="plan-tier">Growth</div>
+          <div class="plan-name">Intermediate Futures</div>
+          <div class="plan-tagline">Balanced risk-reward futures strategies</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row"><span class="period">Monthly Pack</span><span class="amount"><sup>$</sup>249</span></div>
+          <div class="price-row"><span class="period">Quarterly Pack</span><span class="amount"><sup>$</sup>499</span></div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 10% &nbsp;|&nbsp; <strong>Target 2:</strong> 18% &nbsp;|&nbsp; SL: 10%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>10–15 signals per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Leverage guidance (5x–10x)</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-primary">Buy Now</button></div>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-tier">Professional</div>
+          <div class="plan-name">Pro Futures</div>
+          <div class="plan-tagline">High-conviction futures with deep analysis</div>
+        </div>
+        <div class="price-rows">
+          <div class="price-row"><span class="period">3 Months</span><span class="amount"><sup>$</sup>799</span></div>
+          <div class="price-row"><span class="period">6 Months</span><span class="amount"><sup>$</sup>1,199</span></div>
+          <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>1,799</span></div>
+        </div>
+        <div class="plan-features">
+          <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 15% &nbsp;|&nbsp; <strong>Target 2:</strong> 25% &nbsp;|&nbsp; SL: 15%</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>15–20 signals per month</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>CMT Certified Analyst coverage</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Leverage strategies (10x–20x)</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Technical research reports</span></div>
+          <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        </div>
+        <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOREX ==================== -->
+<div class="plans-section" id="tab-forex">
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Starter</div>
+        <div class="plan-name">Beginner Forex</div>
+        <div class="plan-tagline">Essential forex signals for new traders</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Weekly Pack</span><span class="amount"><sup>$</sup>89</span></div>
+        <div class="price-row"><span class="period">Monthly Pack</span><span class="amount"><sup>$</sup>249</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 30–50 pips &nbsp;|&nbsp; SL: 25 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>3–5 Forex signals per week</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Major currency pairs only</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-header">
+        <div class="plan-tier">Growth</div>
+        <div class="plan-name">Intermediate Forex</div>
+        <div class="plan-tagline">Multi-pair signals with expert analysis</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Monthly Pack</span><span class="amount"><sup>$</sup>199</span></div>
+        <div class="price-row"><span class="period">Quarterly Pack</span><span class="amount"><sup>$</sup>449</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 50–80 pips &nbsp;|&nbsp; SL: 35 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>10–15 signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Majors + Minors + Gold (XAU)</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-primary">Buy Now</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Professional</div>
+        <div class="plan-name">Pro Forex</div>
+        <div class="plan-tagline">Full-access forex with AI-backed insights</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">3 Months</span><span class="amount"><sup>$</sup>599</span></div>
+        <div class="price-row"><span class="period">6 Months</span><span class="amount"><sup>$</sup>999</span></div>
+        <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>1,499</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target:</strong> 80–150 pips &nbsp;|&nbsp; SL: 50 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>20+ signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>All pairs + Commodities + Indices</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>CMT Certified Analyst support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Detailed Forex research reports</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Signals via Telegram & WhatsApp</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== BOT ==================== -->
+<div class="plans-section" id="tab-bot">
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Entry</div>
+        <div class="plan-name">Bot Basic</div>
+        <div class="plan-tagline">Automated signals for hands-free trading</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Monthly</span><span class="amount"><sup>$</sup>149</span></div>
+        <div class="price-row"><span class="period">Quarterly</span><span class="amount"><sup>$</sup>349</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>AI bot running 24/7</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Auto entry/exit signals</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Crypto + Forex coverage</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram integration</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Basic performance dashboard</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Buy Now</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="featured-badge">Best Value</div>
+      <div class="plan-header">
+        <div class="plan-tier">Advanced</div>
+        <div class="plan-name">Bot Pro</div>
+        <div class="plan-tagline">ML-powered strategies with real-time adaptation</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Monthly</span><span class="amount"><sup>$</sup>299</span></div>
+        <div class="price-row"><span class="period">6 Months</span><span class="amount"><sup>$</sup>1,299</span></div>
+        <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>1,999</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Reinforcement Learning strategies</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>99.4% accuracy AI engine</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Multi-exchange support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Real-time portfolio suggestions</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Expert consultation access</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Advanced performance analytics</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-primary">Buy Now</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Elite</div>
+        <div class="plan-name">Bot Enterprise</div>
+        <div class="plan-tagline">Fully managed AI trading infrastructure</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>3,999</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Dedicated AI bot instance</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Custom strategy configuration</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>All asset classes covered</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>CMT Analyst oversight</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Priority 24/7 support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Monthly detailed P&L reports</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Contact Us</button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== CUSTOMIZED ==================== -->
+<div class="plans-section" id="tab-customized">
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Custom</div>
+        <div class="plan-name">Personal Plan</div>
+        <div class="plan-tagline">Tailored signal plan built around your goals</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Starting From</span><span class="amount"><sup>$</sup>299</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Choose your asset classes</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Custom signal frequency</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Personalised risk parameters</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Dedicated account manager</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram & WhatsApp delivery</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Contact Us</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="featured-badge">Recommended</div>
+      <div class="plan-header">
+        <div class="plan-tier">Custom</div>
+        <div class="plan-name">Portfolio Manager</div>
+        <div class="plan-tagline">Full portfolio management with expert oversight</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Quarterly</span><span class="amount"><sup>$</sup>999</span></div>
+        <div class="price-row"><span class="period">1 Year</span><span class="amount"><sup>$</sup>2,999</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Complete portfolio oversight</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Crypto + Forex + Gold + Indices</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>AI + Human analyst hybrid model</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Monthly review calls</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>CMT Certified Analyst assigned</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Priority 24/7 support</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-primary">Contact Us</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Custom</div>
+        <div class="plan-name">Corporate / Fund</div>
+        <div class="plan-tagline">Institutional-grade solutions for large capital</div>
+      </div>
+      <div class="price-rows">
+        <div class="price-row"><span class="period">Custom Pricing</span><span class="amount" style="font-size:14px; padding-top:4px;">Get Quote</span></div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Bespoke AI strategy development</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>White-label bot options</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>API integration available</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Dedicated analyst team</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Custom reporting & analytics</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>NDA & compliance support</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-plan-outline">Contact Us</button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEWSLETTER BANNER -->
+<div class="newsletter-banner">
+  <div class="newsletter-text">
+    <h3>Subscribe for the Latest Newsletter</h3>
+    <p>Stay ahead of the market — get free weekly insights, signal previews, and market updates.</p>
+  </div>
+  <div class="newsletter-form">
+    <input type="email" placeholder="Enter your email address">
+    <button>Subscribe →</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-<div>Quick Links</div>
-<div>Services</div>
-<div>Contact Placeholder</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom: 0;">
+        <div class="logo-icon">
+          <img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius: 10px; object-fit: contain;">
+        </div>
+      </a>
+      <p>Premium AI-powered trading signals for Forex, Gold, Crypto and Indices. Your wealth, amplified.</p>
+      <div class="contact-info">
+        <a href="tel:+447455873054">📞 +44 7455 873054</a>
+        <a href="mailto:info@hsvtrading.com">✉️ info@hsvtrading.com</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Crypto Signals</a>
+      <a href="#">Forex Signals</a>
+      <a href="#">Gold / COMEX</a>
+      <a href="#">AI Bot</a>
+      <a href="#">Portfolio Mgmt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Education</h4>
+      <a href="#">Crypto Basics</a>
+      <a href="#">Advanced Crypto</a>
+      <a href="#">Forex Basics</a>
+      <a href="#">Forex Pro</a>
+      <a href="#">Track Records</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HSV Trading Technologies. All rights reserved.</span>
+    <span style="color: rgba(255,255,255,0.3)">Made with ❤️</span>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Main category tabs
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.plans-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Sub-tabs (Spot / HODL / Future inside Crypto)
+  function switchSubtab(parent, subtabId, btn) {
+    const section = document.getElementById('tab-' + parent);
+    section.querySelectorAll('.subpanel').forEach(p => p.classList.remove('active'));
+    section.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(parent + '-' + subtabId).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
 </body>
 </html>

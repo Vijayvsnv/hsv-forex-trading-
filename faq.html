@@ -2,29 +2,453 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FAQ | HSV Trading Technologies</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ – HSV Trading Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e5a; --green-light: #22c46e;
+    --dark: #0d0d0d; --dark2: #161616; --dark3: #1e1e1e;
+    --gray: #2a2a2a; --text: #e8e8e8; --text-muted: #888; --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; }
+
+  /* NAVBAR */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(13,13,13,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(26,158,90,0.15); }
+  .navbar { max-width: 1300px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .logo-icon { display: flex; align-items: center; justify-content: center; transition: transform 0.2s, filter 0.2s; filter: drop-shadow(0 4px 12px rgba(26,158,90,0.4)); }
+  .logo:hover .logo-icon { transform: scale(1.07); filter: drop-shadow(0 6px 18px rgba(34,196,110,0.55)); }
+  nav.nav-links { display: flex; align-items: center; gap: 4px; }
+  nav.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 13.5px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; }
+  nav.nav-links a:hover { color: var(--white); background: rgba(26,158,90,0.12); }
+  nav.nav-links a.active { color: var(--green-light); background: rgba(26,158,90,0.12); }
+  .mobile-menu { display: none; font-size: 24px; cursor: pointer; color: var(--text); }
+
+  /* HERO */
+  .hero { padding-top: 68px; background: var(--dark); position: relative; overflow: hidden; text-align: center; padding-bottom: 0; }
+  .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(26,158,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(26,158,90,0.05) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero::after { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 500px; height: 300px; background: radial-gradient(ellipse, rgba(26,158,90,0.09) 0%, transparent 70%); pointer-events: none; }
+  .hero-inner { position: relative; z-index: 2; max-width: 580px; margin: 0 auto; padding: 52px 24px 48px; }
+  .breadcrumb { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; } .breadcrumb a:hover { color: var(--green-light); } .breadcrumb .sep { color: var(--green-light); }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px,3.5vw,44px); font-weight: 800; color: var(--white); margin-bottom: 10px; }
+  .hero h1 .hl { color: var(--green-light); }
+  .hero p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; }
+
+  /* SEARCH BAR */
+  .search-wrap { max-width: 520px; margin: 0 auto; padding: 32px 24px 0; position: relative; z-index: 2; }
+  .search-box { display: flex; align-items: center; background: var(--dark2); border: 1px solid rgba(26,158,90,0.2); border-radius: 12px; padding: 4px 4px 4px 18px; gap: 10px; transition: border-color 0.2s; }
+  .search-box:focus-within { border-color: rgba(26,158,90,0.5); }
+  .search-box input { flex: 1; background: none; border: none; outline: none; font-size: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; padding: 10px 0; }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-box button { background: var(--green); border: none; padding: 10px 18px; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; white-space: nowrap; }
+  .search-box button:hover { background: var(--green-light); }
+
+  /* CATEGORY PILLS */
+  .cats { max-width: 860px; margin: 0 auto; padding: 28px 24px 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 2; }
+  .cat-btn { padding: 7px 18px; border-radius: 100px; border: 1px solid var(--gray); background: none; color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .cat-btn:hover { border-color: var(--green); color: var(--white); }
+  .cat-btn.active { background: rgba(26,158,90,0.12); border-color: var(--green); color: var(--green-light); }
+
+  /* FAQ MAIN */
+  .faq-wrap { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .faq-group { margin-bottom: 36px; }
+  .faq-group-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--green-light); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .faq-group-title::after { content: ''; flex: 1; height: 1px; background: rgba(26,158,90,0.15); }
+
+  .faq-item { background: var(--dark2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.2s; }
+  .faq-item:hover { border-color: rgba(26,158,90,0.15); }
+  .faq-item.open { border-color: rgba(26,158,90,0.25); }
+  .faq-q { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 16px; }
+  .faq-q-text { font-size: 14.5px; font-weight: 600; color: var(--white); line-height: 1.4; }
+  .faq-icon { width: 26px; height: 26px; min-width: 26px; background: rgba(26,158,90,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--green-light); font-size: 16px; font-weight: 300; transition: all 0.3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(26,158,90,0.2); }
+  .faq-a { padding: 0 20px; max-height: 0; overflow: hidden; transition: all 0.35s ease; font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+  .faq-item.open .faq-a { padding: 0 20px 18px; max-height: 300px; }
+  .faq-a strong { color: var(--white); }
+  .faq-a a { color: var(--green-light); text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+
+  /* NO RESULTS */
+  .no-results { text-align: center; padding: 48px 24px; display: none; }
+  .no-results p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+
+  /* CTA STRIP */
+  .cta-strip { background: var(--dark2); border-top: 1px solid rgba(26,158,90,0.08); border-bottom: 1px solid rgba(26,158,90,0.08); padding: 40px 24px; text-align: center; }
+  .cta-strip h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .cta-strip p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--green); color: #fff; border: none; padding: 12px 26px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,158,90,0.3); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--gray); padding: 12px 26px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s; text-decoration: none; display: inline-block; }
+  .btn-outline:hover { border-color: var(--green); color: var(--green-light); }
+
+  /* FOOTER */
+  footer { background: var(--dark2); border-top: 1px solid rgba(255,255,255,0.05); padding: 52px 24px 24px; }
+  .footer-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-brand p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin: 12px 0 18px; max-width: 260px; }
+  .contact-info { display: flex; flex-direction: column; gap: 6px; }
+  .contact-info a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .contact-info a:hover { color: var(--green-light); }
+  .footer-col h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--white); margin-bottom: 16px; }
+  .footer-col a { display: block; text-decoration: none; color: var(--text-muted); font-size: 13.5px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-light); }
+  .footer-bottom { max-width: 1300px; margin: 0 auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-muted); }
+
+  @media (max-width: 700px) {
+    nav.nav-links { display: none; }
+    nav.nav-links.open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--dark2); padding: 20px; gap: 8px; border-bottom: 1px solid var(--gray); }
+    .mobile-menu { display: block; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 440px) { .footer-inner { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
-<header> ... same header ... </header>
+<header>
+  <div class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius:10px;object-fit:contain;"></div>
+    </a>
+    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a><a href="forecasts.html">Forecasts</a>
+      <a href="support.html">Support</a><a href="faq.html" class="active">FAQ</a><a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<section class="section">
-<h2 class="section-title">FAQ</h2>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a><span class="sep">›</span><span>FAQ</span></div>
+    <h1>Frequently Asked <span class="hl">Questions</span></h1>
+    <p>Everything you need to know about HSV Trading — signals, plans, payments, and more.</p>
+  </div>
+</div>
 
-<div class="card faq-question">What services do you offer?</div>
-<div class="card faq-answer">Forex, Gold, Crypto, Portfolio Management</div>
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <span style="font-size:16px;color:var(--text-muted)">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search questions..." oninput="filterFaqs()">
+    <button onclick="filterFaqs()">Search</button>
+  </div>
+</div>
 
-<div class="card faq-question">How can I join?</div>
-<div class="card faq-answer">Use contact page</div>
-</section>
+<!-- CATEGORY PILLS -->
+<div class="cats">
+  <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
+  <button class="cat-btn" onclick="filterCat('general',this)">General</button>
+  <button class="cat-btn" onclick="filterCat('signals',this)">Signals</button>
+  <button class="cat-btn" onclick="filterCat('payment',this)">Payment</button>
+  <button class="cat-btn" onclick="filterCat('bot',this)">AI Bot</button>
+  <button class="cat-btn" onclick="filterCat('account',this)">Account</button>
+</div>
 
+<!-- FAQ ITEMS -->
+<div class="faq-wrap">
+
+  <!-- GENERAL -->
+  <div class="faq-group" data-group="general">
+    <div class="faq-group-title">General</div>
+
+    <div class="faq-item" data-cat="general" data-q="what is hsv trading technologies">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What is HSV Trading Technologies?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">HSV Trading Technologies is a premium AI-powered trading signal and research firm. We provide Forex, Gold (COMEX), Crypto, and Indices signals backed by <strong>CMT & NISM certified analysts</strong> and machine learning technology — helping traders of all levels make smarter, more informed decisions.</div>
+    </div>
+
+    <div class="faq-item" data-cat="general" data-q="who can use hsv trading services">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Who can use HSV Trading services?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Anyone can use our services — from <strong>complete beginners</strong> to experienced institutional traders. We have plans designed for every experience level, with guidance and support provided every step of the way.</div>
+    </div>
+
+    <div class="faq-item" data-cat="general" data-q="which markets does hsv cover">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Which markets does HSV cover?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">We cover <strong>Forex</strong> (major, minor, and exotic pairs), <strong>Gold & COMEX</strong> (XAU, XAG, WTI Crude), <strong>Crypto</strong> (Spot, HODL, Futures), and <strong>Global Indices</strong> (SPX500, NASDAQ, DAX). All through one platform.</div>
+    </div>
+
+    <div class="faq-item" data-cat="general" data-q="is hsv trading regulated certified">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Are your analysts certified?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Yes. Our analysts hold <strong>CMT (Chartered Market Technician)</strong> and <strong>NISM (National Institute of Securities Markets)</strong> certifications. Our team dedicates 70+ hours per week to technical and fundamental market research.</div>
+    </div>
+  </div>
+
+  <!-- SIGNALS -->
+  <div class="faq-group" data-group="signals">
+    <div class="faq-group-title">Signals</div>
+
+    <div class="faq-item" data-cat="signals" data-q="how are signals delivered telegram whatsapp">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How are signals delivered?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Signals are delivered instantly via <strong>Telegram and WhatsApp</strong>. Every signal includes the asset name, entry price, Target 1, Target 2, and Stop Loss — no guesswork involved.</div>
+    </div>
+
+    <div class="faq-item" data-cat="signals" data-q="what is signal accuracy rate">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What is your signal accuracy rate?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Our AI-powered system combined with CMT analyst review achieves up to <strong>99.4% accuracy</strong>. All historical signal results are documented in our public Track Sheet Records — fully transparent and verifiable.</div>
+    </div>
+
+    <div class="faq-item" data-cat="signals" data-q="how many signals per week month">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How many signals will I receive?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">It depends on your plan. Beginner plans receive <strong>2–3 signals per week</strong>. Intermediate and Pro plans receive <strong>10–12 signals per month</strong>. Bundle plans can receive 30+ signals across all asset classes combined.</div>
+    </div>
+
+    <div class="faq-item" data-cat="signals" data-q="what information comes with each signal entry stop loss target">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What does each signal include?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Every signal comes with: <strong>Asset / Pair name</strong>, <strong>Entry Price</strong>, <strong>Target 1 (TP1)</strong>, <strong>Target 2 (TP2)</strong>, and <strong>Stop Loss (SL)</strong>. Pro plans also include a technical research note explaining the rationale behind the call.</div>
+    </div>
+
+    <div class="faq-item" data-cat="signals" data-q="can i see past signal track record history">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Can I see past signal performance?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Yes! We maintain <strong>public Track Sheet Records</strong> for Crypto Spot, Crypto Futures, and Forex signals. You can review our historical performance before subscribing — full transparency, no hidden results.</div>
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="faq-group" data-group="payment">
+    <div class="faq-group-title">Payment & Plans</div>
+
+    <div class="faq-item" data-cat="payment" data-q="how do i pay for a plan payment methods">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How do I pay for a plan?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">We accept multiple payment methods including <strong>bank transfer, crypto payment, and card payments</strong>. Visit our <a href="contact.html">Contact page</a> to get payment details or reach us directly on WhatsApp for a quick setup.</div>
+    </div>
+
+    <div class="faq-item" data-cat="payment" data-q="are refunds available refund policy">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Are refunds available?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">All consulting and subscription fees are <strong>non-refundable</strong> as per our policy. We strongly recommend starting with a shorter-duration plan (weekly or monthly) to evaluate our service before committing to longer packages.</div>
+    </div>
+
+    <div class="faq-item" data-cat="payment" data-q="can i upgrade downgrade plan">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Can I upgrade my plan?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Yes! You can upgrade to a higher-tier plan at any time. The remaining value of your current subscription will be <strong>credited towards the new plan</strong>. Contact our support team on WhatsApp or Telegram to arrange your upgrade.</div>
+    </div>
+
+    <div class="faq-item" data-cat="payment" data-q="yearly discount savings billing">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Do I get a discount for yearly billing?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Yes — our yearly billing option saves you <strong>up to 30%</strong> compared to monthly billing. You can view the discounted yearly prices on our <a href="pricing.html">Pricing page</a> by toggling to "Yearly" billing.</div>
+    </div>
+
+    <div class="faq-item" data-cat="payment" data-q="bundle deals multiple assets discount">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Are there bundle deals available?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Absolutely. Our <strong>Bundle Deals</strong> let you combine Crypto + Forex + Gold + AI Bot at a significantly reduced price — saving up to 40% versus buying each service separately. See our <a href="pricing.html">Pricing page</a> for Bundle options.</div>
+    </div>
+  </div>
+
+  <!-- AI BOT -->
+  <div class="faq-group" data-group="bot">
+    <div class="faq-group-title">AI Bot</div>
+
+    <div class="faq-item" data-cat="bot" data-q="how does the ai bot work automated trading">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How does the HSV AI Bot work?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Our AI bot uses <strong>Reinforcement Learning and Machine Learning</strong> to continuously analyse market conditions across multiple asset classes. It runs 24/7, auto-generates entry and exit signals, and adapts its strategy in real-time based on market data.</div>
+    </div>
+
+    <div class="faq-item" data-cat="bot" data-q="ai bot accuracy 99.4 percent how">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How does the bot achieve 99.4% accuracy?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">The bot combines <strong>historical pattern recognition, real-time price action analysis, and sentiment data</strong> with CMT analyst oversight. Every bot signal is cross-verified before delivery, eliminating low-confidence setups from the output.</div>
+    </div>
+
+    <div class="faq-item" data-cat="bot" data-q="which exchanges does bot support">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Which exchanges does the bot support?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">The Bot Pro and Enterprise plans support <strong>multiple major exchanges</strong> including Binance, Bybit, OKX, and leading Forex brokers. The Bot Basic plan works with primary exchanges. Contact us for a full compatibility list.</div>
+    </div>
+
+    <div class="faq-item" data-cat="bot" data-q="do i need trading experience to use bot">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Do I need trading experience to use the bot?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">No experience needed for the signal-based plans. However, for the <strong>Bot Enterprise</strong> plan with custom configurations, basic trading knowledge is recommended. Our team provides a full onboarding session with every bot subscription.</div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="faq-group" data-group="account">
+    <div class="faq-group-title">Account & Support</div>
+
+    <div class="faq-item" data-cat="account" data-q="how do i get started join">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How do I get started with HSV Trading?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Getting started is simple — <strong>browse our plans</strong> on the Services or Pricing page, choose a plan that suits you, and contact us via WhatsApp or Telegram to complete setup. You'll receive your first signal within 24 hours of activation.</div>
+    </div>
+
+    <div class="faq-item" data-cat="account" data-q="support response time how fast reply">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">How fast is your support response?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Our team responds within <strong>15 minutes</strong> on WhatsApp and Telegram during active hours. Email queries are answered within <strong>2–4 hours</strong>. We operate 24/7 across global time zones.</div>
+    </div>
+
+    <div class="faq-item" data-cat="account" data-q="what languages does hsv support">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">What languages do you support?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">Our team currently provides support in <strong>English, Hindi, and Urdu</strong>. Signals are delivered in English with clear, jargon-free formatting understandable by traders worldwide.</div>
+    </div>
+
+    <div class="faq-item" data-cat="account" data-q="is my money safe investment risk disclaimer">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Is trading with HSV signals risk-free?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a"><strong>No investment is ever risk-free.</strong> Financial markets carry inherent risk and past performance does not guarantee future results. Our signals are based on technical analysis and are for informational purposes only. Always trade within your risk tolerance and never invest more than you can afford to lose.</div>
+    </div>
+  </div>
+
+  <!-- No results message -->
+  <div class="no-results" id="noResults">
+    <div style="font-size:40px;margin-bottom:10px;">🔍</div>
+    <p>No questions found matching your search. Try different keywords or <a href="contact.html" style="color:var(--green-light)">contact us directly</a>.</p>
+  </div>
+
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h3>Still have questions?</h3>
+  <p>Our team is online 24/7 — reach us directly for a quick answer.</p>
+  <div class="cta-btns">
+    <a href="https://wa.me/447455873054" target="_blank" class="btn-primary">💬 WhatsApp Us</a>
+    <a href="contact.html" class="btn-outline">Contact Page →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-<div>Quick Links</div>
-<div>Services</div>
-<div>Contact Placeholder</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom:0;">
+        <div class="logo-icon"><img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius:10px;object-fit:contain;"></div>
+      </a>
+      <p>Premium AI-powered trading signals for Forex, Gold, Crypto and Indices. Your wealth, amplified.</p>
+      <div class="contact-info">
+        <a href="tel:+447455873054">📞 +44 7455 873054</a>
+        <a href="mailto:info@hsvtrading.com">✉️ info@hsvtrading.com</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a><a href="about.html">About Us</a>
+      <a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Crypto Signals</a><a href="#">Forex Signals</a>
+      <a href="#">Gold / COMEX</a><a href="#">AI Bot</a><a href="#">Portfolio Mgmt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Education</h4>
+      <a href="#">Crypto Basics</a><a href="#">Advanced Crypto</a>
+      <a href="#">Forex Basics</a><a href="#">Forex Pro</a><a href="#">Track Records</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HSV Trading Technologies. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.3)">Made with ❤️</span>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('searchInput').value = '';
+    const groups = document.querySelectorAll('.faq-group');
+    const items  = document.querySelectorAll('.faq-item');
+    items.forEach(i => { i.style.display = (cat === 'all' || i.dataset.cat === cat) ? '' : 'none'; });
+    groups.forEach(g => {
+      const visible = [...g.querySelectorAll('.faq-item')].some(i => i.style.display !== 'none');
+      g.style.display = visible ? '' : 'none';
+    });
+    document.getElementById('noResults').style.display = 'none';
+  }
+
+  function filterFaqs() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.cat-btn').classList.add('active');
+    let anyVisible = false;
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(i => {
+      const match = !q || i.dataset.q.includes(q) || i.querySelector('.faq-q-text').textContent.toLowerCase().includes(q) || i.querySelector('.faq-a').textContent.toLowerCase().includes(q);
+      i.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    document.querySelectorAll('.faq-group').forEach(g => {
+      const vis = [...g.querySelectorAll('.faq-item')].some(i => i.style.display !== 'none');
+      g.style.display = vis ? '' : 'none';
+    });
+    document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
+  }
+</script>
 </body>
 </html>

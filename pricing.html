@@ -2,29 +2,982 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Pricing | HSV Trading Technologies</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing – HSV Trading Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a9e5a;
+    --green-light: #22c46e;
+    --dark: #0d0d0d;
+    --dark2: #161616;
+    --dark3: #1e1e1e;
+    --gray: #2a2a2a;
+    --text: #e8e8e8;
+    --text-muted: #888;
+    --white: #ffffff;
+    --red: #e05252;
+    --gold: #f0b429;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; }
+
+  /* NAVBAR */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(13,13,13,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(26,158,90,0.15);
+  }
+  .navbar {
+    max-width: 1300px; margin: 0 auto; padding: 0 24px;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .logo-icon {
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, filter 0.2s;
+    filter: drop-shadow(0 4px 12px rgba(26,158,90,0.4));
+  }
+  .logo:hover .logo-icon { transform: scale(1.07); filter: drop-shadow(0 6px 18px rgba(34,196,110,0.55)); }
+  nav.nav-links { display: flex; align-items: center; gap: 4px; }
+  nav.nav-links a {
+    text-decoration: none; color: var(--text-muted); font-size: 13.5px; font-weight: 500;
+    padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+  }
+  nav.nav-links a:hover { color: var(--white); background: rgba(26,158,90,0.12); }
+  nav.nav-links a.active { color: var(--green-light); background: rgba(26,158,90,0.12); }
+  .mobile-menu { display: none; font-size: 24px; cursor: pointer; color: var(--text); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding-top: 68px; background: var(--dark);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(26,158,90,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(26,158,90,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,158,90,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-hero-inner {
+    max-width: 1300px; margin: 0 auto; padding: 60px 24px 52px;
+    position: relative; z-index: 2; text-align: center;
+  }
+  .breadcrumb { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-muted); margin-bottom: 18px; }
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--green-light); }
+  .breadcrumb .sep { color: var(--green-light); }
+  .page-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px,4vw,52px); font-weight: 800; color: var(--white); margin-bottom: 14px; line-height: 1.1; }
+  .page-hero h1 .highlight { color: var(--green-light); }
+  .page-hero p { font-size: 15.5px; color: var(--text-muted); max-width: 520px; margin: 0 auto 28px; line-height: 1.75; }
+
+  /* BILLING TOGGLE */
+  .billing-toggle {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 100px; padding: 6px 8px; margin-bottom: 8px;
+  }
+  .toggle-label { font-size: 13px; font-weight: 600; color: var(--text-muted); padding: 0 8px; cursor: pointer; transition: color 0.2s; }
+  .toggle-label.active { color: var(--white); }
+  .toggle-switch {
+    width: 44px; height: 24px; background: var(--green); border-radius: 100px;
+    position: relative; cursor: pointer; transition: background 0.3s; flex-shrink: 0;
+  }
+  .toggle-switch::after {
+    content: ''; position: absolute; width: 18px; height: 18px;
+    background: white; border-radius: 50%; top: 3px; left: 3px;
+    transition: transform 0.3s;
+  }
+  .toggle-switch.yearly::after { transform: translateX(20px); }
+  .save-badge {
+    background: rgba(26,158,90,0.15); border: 1px solid rgba(26,158,90,0.25);
+    color: var(--green-light); font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 100px; margin-left: -4px;
+  }
+
+  /* CATEGORY TABS */
+  .tabs-wrapper {
+    background: var(--dark2); border-bottom: 1px solid rgba(26,158,90,0.1);
+    position: sticky; top: 68px; z-index: 100;
+  }
+  .tabs-inner { max-width: 1300px; margin: 0 auto; padding: 0 24px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .tabs-inner::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 15px 22px; font-size: 13.5px; font-weight: 600;
+    color: var(--text-muted); background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active { color: var(--green-light); border-bottom-color: var(--green-light); }
+
+  /* PRICING SECTIONS */
+  .pricing-section { display: none; max-width: 1300px; margin: 0 auto; padding: 56px 24px 80px; }
+  .pricing-section.active { display: block; }
+
+  /* PLANS GRID */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* PLAN CARD */
+  .plan-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .plan-card:hover {
+    border-color: rgba(26,158,90,0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .plan-card.featured {
+    border-color: rgba(26,158,90,0.3);
+    box-shadow: 0 0 0 1px rgba(26,158,90,0.15), 0 24px 60px rgba(0,0,0,0.5);
+    transform: scale(1.02);
+  }
+  .plan-card.featured:hover { transform: scale(1.02) translateY(-6px); }
+
+  .popular-badge {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #fff;
+    font-size: 11px; font-weight: 700; padding: 5px 18px;
+    border-radius: 0 0 10px 10px; letter-spacing: 0.5px; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .plan-header {
+    padding: 32px 28px 24px;
+    background: rgba(255,255,255,0.015);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .plan-card.featured .plan-header {
+    background: linear-gradient(135deg, rgba(26,158,90,0.12), rgba(26,158,90,0.03));
+  }
+
+  .plan-tier { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--green-light); text-transform: uppercase; margin-bottom: 6px; }
+  .plan-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+  .plan-tagline { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+
+  /* Price display */
+  .price-block { display: flex; align-items: flex-end; gap: 4px; margin-bottom: 6px; }
+  .price-currency { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+  .price-amount { font-family: 'Syne', sans-serif; font-size: 52px; font-weight: 800; color: var(--white); line-height: 1; }
+  .plan-card.featured .price-amount { color: var(--green-light); }
+  .price-period { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+  .price-original { font-size: 13px; color: var(--text-muted); text-decoration: line-through; margin-right: 6px; }
+  .price-save { font-size: 12px; font-weight: 700; color: var(--green-light); background: rgba(26,158,90,0.1); padding: 2px 8px; border-radius: 100px; }
+
+  /* Multi-price options */
+  .price-options { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .price-option {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--dark3); border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: all 0.2s;
+  }
+  .price-option:hover, .price-option.selected {
+    border-color: rgba(26,158,90,0.3); background: rgba(26,158,90,0.06);
+  }
+  .price-option.selected .po-radio { background: var(--green); border-color: var(--green); }
+  .price-option.selected .po-radio::after { opacity: 1; }
+  .po-left { display: flex; align-items: center; gap: 10px; }
+  .po-radio {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid var(--gray); transition: all 0.2s; position: relative; flex-shrink: 0;
+  }
+  .po-radio::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    background: white; border-radius: 50%; top: 3px; left: 3px; opacity: 0; transition: opacity 0.2s;
+  }
+  .po-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .po-badge { font-size: 10px; font-weight: 700; color: var(--green-light); background: rgba(26,158,90,0.12); padding: 2px 7px; border-radius: 100px; }
+  .po-price { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: var(--green-light); }
+
+  /* Features */
+  .plan-features { padding: 20px 28px; display: flex; flex-direction: column; gap: 11px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .feature-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+  .feature-item .check {
+    width: 18px; height: 18px; min-width: 18px;
+    background: rgba(26,158,90,0.12); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--green-light); margin-top: 1px;
+  }
+  .feature-item .cross {
+    width: 18px; height: 18px; min-width: 18px;
+    background: rgba(255,255,255,0.04); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--text-muted); margin-top: 1px;
+  }
+  .feature-item strong { color: var(--white); }
+  .feature-divider { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 4px; }
+
+  /* CTA */
+  .plan-cta { padding: 20px 28px 28px; }
+  .btn-plan {
+    width: 100%; padding: 14px; border-radius: 10px; border: none;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.25s; letter-spacing: 0.3px;
+  }
+  .btn-primary-plan { background: var(--green); color: #fff; }
+  .btn-primary-plan:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,158,90,0.35); }
+  .btn-outline-plan { background: transparent; color: var(--text); border: 1px solid var(--gray); }
+  .btn-outline-plan:hover { border-color: var(--green); color: var(--green-light); }
+  .btn-featured-plan { background: linear-gradient(135deg, var(--green), var(--green-light)); color: #fff; }
+  .btn-featured-plan:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26,158,90,0.45); }
+
+  /* COMPARISON TABLE */
+  .compare-section { margin-top: 64px; }
+  .compare-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 24px; }
+  .compare-table {
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px; overflow: hidden; width: 100%;
+  }
+  .ct-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+  .ct-row:last-child { border-bottom: none; }
+  .ct-row:hover:not(.ct-header) { background: rgba(26,158,90,0.03); }
+  .ct-row.ct-header { background: var(--dark3); }
+  .ct-row.ct-header .ct-cell { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 20px; }
+  .ct-row.ct-header .ct-cell.featured-col { color: var(--green-light); }
+  .ct-cell { padding: 13px 20px; font-size: 13.5px; color: var(--text-muted); display: flex; align-items: center; }
+  .ct-cell:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.04); }
+  .ct-cell.feature-name { color: var(--white); font-weight: 500; }
+  .ct-cell.featured-col { background: rgba(26,158,90,0.03); }
+  .ct-yes { color: var(--green-light); font-size: 16px; }
+  .ct-no { color: var(--gray); font-size: 16px; }
+  .ct-val { color: var(--white); font-weight: 600; font-size: 13px; }
+
+  /* FAQ MINI */
+  .faq-section { margin-top: 64px; }
+  .faq-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 20px; }
+  .faq-item {
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+  }
+  .faq-q {
+    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; transition: background 0.2s; font-size: 14px; font-weight: 600; color: var(--white);
+  }
+  .faq-q:hover { background: rgba(26,158,90,0.05); }
+  .faq-icon { color: var(--green-light); font-size: 18px; transition: transform 0.3s; font-weight: 300; min-width: 20px; text-align: center; }
+  .faq-a { padding: 0 22px; max-height: 0; overflow: hidden; transition: all 0.35s ease; font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+  .faq-item.open .faq-a { padding: 0 22px 18px; max-height: 200px; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  /* GUARANTEE BANNER */
+  .guarantee-banner {
+    background: linear-gradient(135deg, rgba(26,158,90,0.08), rgba(26,158,90,0.02));
+    border: 1px solid rgba(26,158,90,0.15); border-radius: 20px;
+    padding: 44px 48px; display: flex; align-items: center; gap: 32px;
+    margin: 0 24px 80px; max-width: 1252px; margin-left: auto; margin-right: auto;
+    flex-wrap: wrap;
+  }
+  .guarantee-icon { font-size: 56px; flex-shrink: 0; }
+  .guarantee-text h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .guarantee-text p { font-size: 14px; color: var(--text-muted); line-height: 1.7; max-width: 600px; }
+  .guarantee-cta { margin-left: auto; flex-shrink: 0; }
+  .btn-guarantee {
+    background: var(--green); color: #fff; border: none;
+    padding: 14px 28px; border-radius: 10px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.25s;
+    text-decoration: none; display: inline-block; white-space: nowrap;
+  }
+  .btn-guarantee:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,158,90,0.35); }
+
+  /* FOOTER */
+  footer { background: var(--dark2); border-top: 1px solid rgba(255,255,255,0.05); padding: 60px 24px 28px; }
+  .footer-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin: 12px 0 20px; max-width: 260px; }
+  .contact-info { display: flex; flex-direction: column; gap: 6px; }
+  .contact-info a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .contact-info a:hover { color: var(--green-light); }
+  .footer-col h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--white); margin-bottom: 18px; }
+  .footer-col a { display: block; text-decoration: none; color: var(--text-muted); font-size: 13.5px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-light); }
+  .footer-bottom { max-width: 1300px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-muted); }
+
+  /* PULSE */
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+  /* MOBILE */
+  @media (max-width: 1000px) {
+    .plans-grid { grid-template-columns: 1fr 1fr; }
+    .plan-card.featured { transform: none; }
+    .plan-card.featured:hover { transform: translateY(-6px); }
+    .ct-row { grid-template-columns: 2fr 1fr 1fr; }
+    .ct-row .ct-cell:last-child { display: none; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .plans-grid { grid-template-columns: 1fr; }
+    nav.nav-links { display: none; }
+    nav.nav-links.open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--dark2); padding: 20px; gap: 8px; border-bottom: 1px solid var(--gray); }
+    .mobile-menu { display: block; }
+    .ct-row { grid-template-columns: 1.5fr 1fr 1fr; }
+    .guarantee-banner { flex-direction: column; padding: 32px 24px; }
+    .guarantee-cta { margin-left: 0; width: 100%; }
+    .btn-guarantee { width: 100%; text-align: center; }
+    .footer-inner { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-<header> ... same header ... </header>
+<!-- NAVBAR -->
+<header>
+  <div class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius:10px;object-fit:contain;">
+      </div>
+    </a>
+    <div class="mobile-menu" onclick="toggleMenu()">☰</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="forecasts.html">Forecasts</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<section class="section">
-<h2 class="section-title">Pricing Plans</h2>
-<div class="cards">
-<div class="card">Quarterly</div>
-<div class="card">Half-Yearly</div>
-<div class="card">Yearly</div>
-<div class="card">Premium Yearly</div>
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span class="sep">›</span><span>Pricing</span>
+    </div>
+    <h1>Simple, <span class="highlight">Transparent</span> Pricing</h1>
+    <p>No hidden fees. No surprises. Choose the plan that fits your trading style and scale up whenever you're ready.</p>
+
+    <!-- Billing Toggle -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
+      <div class="billing-toggle">
+        <span class="toggle-label active" id="lbl-monthly" onclick="setBilling('monthly')">Monthly</span>
+        <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()"></div>
+        <span class="toggle-label" id="lbl-yearly" onclick="setBilling('yearly')">Yearly</span>
+      </div>
+      <span class="save-badge">💰 Save up to 30% Yearly</span>
+    </div>
+  </div>
 </div>
-</section>
 
+<!-- TABS -->
+<div class="tabs-wrapper">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('crypto',this)">₿ Crypto</button>
+    <button class="tab-btn" onclick="switchTab('forex',this)">💱 Forex</button>
+    <button class="tab-btn" onclick="switchTab('gold',this)">🥇 Gold & COMEX</button>
+    <button class="tab-btn" onclick="switchTab('bot',this)">🤖 AI Bot</button>
+    <button class="tab-btn" onclick="switchTab('bundle',this)">⚡ Bundle Deals</button>
+  </div>
+</div>
+
+
+<!-- ============ CRYPTO ============ -->
+<div class="pricing-section active" id="tab-crypto">
+  <div class="plans-grid">
+
+    <!-- Beginner -->
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Starter</div>
+        <div class="plan-name">Beginner</div>
+        <div class="plan-tagline">Perfect for traders just starting their crypto journey</div>
+        <div class="price-block">
+          <span class="price-currency">$</span>
+          <span class="price-amount billing-price" data-monthly="99" data-yearly="69">99</span>
+        </div>
+        <div class="price-period billing-period" data-monthly="/ week" data-yearly="/ week (billed yearly)">/ week</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">Weekly Pack</span></div>
+            <span class="po-price billing-opt" data-monthly="$99" data-yearly="$69">$99</span>
+          </div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 6% &nbsp;|&nbsp; <strong>Target 2:</strong> 8%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Stop Loss: 6%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>5–7 day holding period</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>2–3 Signals per week</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Market Expert Support</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Research Reports</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>CMT Analyst Access</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+
+    <!-- Intermediate (Featured) -->
+    <div class="plan-card featured">
+      <div class="popular-badge">⭐ Most Popular</div>
+      <div class="plan-header">
+        <div class="plan-tier">Growth</div>
+        <div class="plan-name">Intermediate</div>
+        <div class="plan-tagline">For traders ready to grow consistently in crypto</div>
+        <div class="price-block">
+          <span class="price-currency">$</span>
+          <span class="price-amount billing-price" data-monthly="199" data-yearly="149">199</span>
+        </div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly Pack</span></div>
+            <span class="po-price billing-opt" data-monthly="$199" data-yearly="$149">$199</span>
+          </div>
+          <div class="price-option" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">Quarterly Pack</span><span class="po-badge">Save 33%</span></div>
+            <span class="po-price billing-opt" data-monthly="$399" data-yearly="$299">$399</span>
+          </div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 10% &nbsp;|&nbsp; <strong>Target 2:</strong> 15%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Stop Loss: 10%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>7–10 day holding period</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>10–12 Signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Market Expert Support</strong></span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Research Reports</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>CMT Analyst Access</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-featured-plan">Get Started</button></div>
+    </div>
+
+    <!-- Pro -->
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Professional</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-tagline">Full-suite for serious crypto traders</div>
+        <div class="price-block">
+          <span class="price-currency">$</span>
+          <span class="price-amount billing-price" data-monthly="699" data-yearly="499">699</span>
+        </div>
+        <div class="price-period billing-period" data-monthly="/ 3 months" data-yearly="/ 3 months (billed yearly)">/ 3 months</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">3 Months</span></div>
+            <span class="po-price billing-opt" data-monthly="$699" data-yearly="$499">$699</span>
+          </div>
+          <div class="price-option" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">6 Months</span><span class="po-badge">Save 28%</span></div>
+            <span class="po-price billing-opt" data-monthly="$999" data-yearly="$749">$999</span>
+          </div>
+          <div class="price-option" onclick="selectOption(this)">
+            <div class="po-left"><div class="po-radio"></div><span class="po-label">1 Year</span><span class="po-badge">Best Value</span></div>
+            <span class="po-price billing-opt" data-monthly="$1,499" data-yearly="$1,099">$1,499</span>
+          </div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span><strong>Target 1:</strong> 15% &nbsp;|&nbsp; <strong>Target 2:</strong> 22%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Stop Loss: 15%</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>7–10 day holding period</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>10–12 Signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Market Expert Support</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Technical Research Reports</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Certified Analyst Access</strong></span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="compare-section">
+    <div class="compare-title">📊 Plan Comparison</div>
+    <div class="compare-table">
+      <div class="ct-row ct-header">
+        <div class="ct-cell">Feature</div>
+        <div class="ct-cell">Beginner</div>
+        <div class="ct-cell featured-col">Intermediate</div>
+        <div class="ct-cell">Pro</div>
+      </div>
+      <div class="ct-row"><div class="ct-cell feature-name">Weekly Signals</div><div class="ct-cell"><span class="ct-val">2–3</span></div><div class="ct-cell featured-col"><span class="ct-val">10–12/mo</span></div><div class="ct-cell"><span class="ct-val">10–12/mo</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">Max Target</div><div class="ct-cell"><span class="ct-val">8%</span></div><div class="ct-cell featured-col"><span class="ct-val">15%</span></div><div class="ct-cell"><span class="ct-val">22%</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">Telegram + WhatsApp</div><div class="ct-cell"><span class="ct-yes">✓</span></div><div class="ct-cell featured-col"><span class="ct-yes">✓</span></div><div class="ct-cell"><span class="ct-yes">✓</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">Expert Support</div><div class="ct-cell"><span class="ct-no">✕</span></div><div class="ct-cell featured-col"><span class="ct-yes">✓</span></div><div class="ct-cell"><span class="ct-yes">✓</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">Research Reports</div><div class="ct-cell"><span class="ct-no">✕</span></div><div class="ct-cell featured-col"><span class="ct-no">✕</span></div><div class="ct-cell"><span class="ct-yes">✓</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">CMT Analyst Access</div><div class="ct-cell"><span class="ct-no">✕</span></div><div class="ct-cell featured-col"><span class="ct-no">✕</span></div><div class="ct-cell"><span class="ct-yes">✓</span></div></div>
+      <div class="ct-row"><div class="ct-cell feature-name">Free Newsletter</div><div class="ct-cell"><span class="ct-yes">✓</span></div><div class="ct-cell featured-col"><span class="ct-yes">✓</span></div><div class="ct-cell"><span class="ct-yes">✓</span></div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">❓ Frequently Asked Questions</div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How are signals delivered?</span><span class="faq-icon">+</span></div><div class="faq-a">All signals are delivered instantly via Telegram and WhatsApp. You'll receive entry price, target levels (TP1 & TP2), and stop-loss with every signal — no ambiguity.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Can I upgrade my plan later?</span><span class="faq-icon">+</span></div><div class="faq-a">Yes, you can upgrade to a higher plan at any time. The remaining value of your current plan will be credited towards the new one. Contact our support team to arrange the upgrade.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Are refunds available?</span><span class="faq-icon">+</span></div><div class="faq-a">All consulting fees are non-refundable as per our policy. We strongly recommend starting with a shorter plan to test our signals before committing to a longer duration.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>What is the signal accuracy rate?</span><span class="faq-icon">+</span></div><div class="faq-a">Our AI-powered system combined with CMT analyst review delivers up to 99.4% accuracy. All historical signals are documented in our public Track Sheet Records available on the website.</div></div>
+  </div>
+</div>
+
+
+<!-- ============ FOREX ============ -->
+<div class="pricing-section" id="tab-forex">
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Starter</div>
+        <div class="plan-name">Beginner Forex</div>
+        <div class="plan-tagline">Essential Forex signals for new traders</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="89" data-yearly="62">89</span></div>
+        <div class="price-period billing-period" data-monthly="/ week" data-yearly="/ week (billed yearly)">/ week</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Weekly Pack</span></div><span class="po-price billing-opt" data-monthly="$89" data-yearly="$62">$89</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly Pack</span><span class="po-badge">Save 20%</span></div><span class="po-price billing-opt" data-monthly="$249" data-yearly="$179">$249</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>30–50 pips</strong> | SL: 25 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>3–5 Forex signals per week</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Major pairs only (EUR, GBP, USD)</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Expert Support</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Gold / COMEX signals</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="popular-badge">⭐ Most Popular</div>
+      <div class="plan-header">
+        <div class="plan-tier">Growth</div>
+        <div class="plan-name">Intermediate Forex</div>
+        <div class="plan-tagline">Multi-pair signals with expert analysis</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="199" data-yearly="139">199</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly Pack</span></div><span class="po-price billing-opt" data-monthly="$199" data-yearly="$139">$199</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Quarterly Pack</span><span class="po-badge">Save 25%</span></div><span class="po-price billing-opt" data-monthly="$449" data-yearly="$329">$449</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>50–80 pips</strong> | SL: 35 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>10–15 signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Majors + Minors + XAU/USD</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Market Expert Support</strong></span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Research Reports</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-featured-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Professional</div>
+        <div class="plan-name">Pro Forex</div>
+        <div class="plan-tagline">AI-backed full-access Forex intelligence</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="599" data-yearly="419">599</span></div>
+        <div class="price-period billing-period" data-monthly="/ 3 months" data-yearly="/ 3 months (billed yearly)">/ 3 months</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">3 Months</span></div><span class="po-price billing-opt" data-monthly="$599" data-yearly="$419">$599</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">6 Months</span><span class="po-badge">Save 30%</span></div><span class="po-price billing-opt" data-monthly="$999" data-yearly="$699">$999</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">1 Year</span><span class="po-badge">Best Value</span></div><span class="po-price billing-opt" data-monthly="$1,499" data-yearly="$1,049">$1,499</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>80–150 pips</strong> | SL: 50 pips</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>20+ signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>All pairs + Commodities + Indices</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Market Expert Support</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Detailed Research Reports</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Certified Analyst</strong></span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ GOLD ============ -->
+<div class="pricing-section" id="tab-gold">
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Starter</div>
+        <div class="plan-name">Gold Basic</div>
+        <div class="plan-tagline">Simple gold signals for commodity beginners</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="109" data-yearly="76">109</span></div>
+        <div class="price-period billing-period" data-monthly="/ week" data-yearly="/ week (billed yearly)">/ week</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Weekly Pack</span></div><span class="po-price billing-opt" data-monthly="$109" data-yearly="$76">$109</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly Pack</span><span class="po-badge">Save 20%</span></div><span class="po-price billing-opt" data-monthly="$299" data-yearly="$209">$299</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>XAU/USD — Gold Spot signals</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>$20–$40</strong> | SL: $15</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>3–4 Gold signals per week</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Silver / Oil signals</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Expert Support</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="popular-badge">⭐ Best Seller</div>
+      <div class="plan-header">
+        <div class="plan-tier">Growth</div>
+        <div class="plan-name">Gold Pro</div>
+        <div class="plan-tagline">Full COMEX coverage — Gold, Silver & Oil</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="249" data-yearly="174">249</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly Pack</span></div><span class="po-price billing-opt" data-monthly="$249" data-yearly="$174">$249</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Quarterly Pack</span><span class="po-badge">Save 27%</span></div><span class="po-price billing-opt" data-monthly="$549" data-yearly="$399">$549</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">1 Year</span><span class="po-badge">Best Value</span></div><span class="po-price billing-opt" data-monthly="$1,799" data-yearly="$1,299">$1,799</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>XAU, XAG, WTI Crude signals</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>$40–$80</strong> | SL: $25</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>8–12 COMEX signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Market Expert Support</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Analyst Coverage</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Research Reports on Metals</strong></span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-featured-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Elite</div>
+        <div class="plan-name">COMEX Elite</div>
+        <div class="plan-tagline">Institutional-grade COMEX intelligence</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="799" data-yearly="559">799</span></div>
+        <div class="price-period billing-period" data-monthly="/ 3 months" data-yearly="/ 3 months (billed yearly)">/ 3 months</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">3 Months</span></div><span class="po-price billing-opt" data-monthly="$799" data-yearly="$559">$799</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">6 Months</span><span class="po-badge">Save 25%</span></div><span class="po-price billing-opt" data-monthly="$1,299" data-yearly="$949">$1,299</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">1 Year</span><span class="po-badge">Best Value</span></div><span class="po-price billing-opt" data-monthly="$2,199" data-yearly="$1,549">$2,199</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>All COMEX assets + Indices</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Target: <strong>$80–$150</strong> | SL: $40</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>20+ signals per month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Dedicated account manager</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Priority Expert Support 24/7</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Analyst + Research Reports</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Monthly P&L Review Calls</strong></span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ BOT ============ -->
+<div class="pricing-section" id="tab-bot">
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Entry</div>
+        <div class="plan-name">Bot Basic</div>
+        <div class="plan-tagline">Automated 24/7 trading for hands-free results</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="149" data-yearly="104">149</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly</span></div><span class="po-price billing-opt" data-monthly="$149" data-yearly="$104">$149</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Quarterly</span><span class="po-badge">Save 22%</span></div><span class="po-price billing-opt" data-monthly="$349" data-yearly="$249">$349</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>AI Bot running 24/7</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Auto entry/exit signals</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Crypto + Forex coverage</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram integration</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Basic performance dashboard</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>ML Reinforcement Learning</span></div>
+        <div class="feature-item"><div class="cross">✕</div><span>Multi-exchange support</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="popular-badge">⭐ Most Popular</div>
+      <div class="plan-header">
+        <div class="plan-tier">Advanced</div>
+        <div class="plan-name">Bot Pro</div>
+        <div class="plan-tagline">ML-powered strategies that adapt in real-time</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="299" data-yearly="209">299</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Monthly</span></div><span class="po-price billing-opt" data-monthly="$299" data-yearly="$209">$299</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">6 Months</span><span class="po-badge">Save 27%</span></div><span class="po-price billing-opt" data-monthly="$1,299" data-yearly="$949">$1,299</span></div>
+          <div class="price-option" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">1 Year</span><span class="po-badge">Best Value</span></div><span class="po-price billing-opt" data-monthly="$1,999" data-yearly="$1,399">$1,999</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Reinforcement Learning strategies</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>99.4% accuracy AI engine</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Multi-exchange support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Real-time portfolio suggestions</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Expert consultation access</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Advanced analytics dashboard</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp alerts</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-featured-plan">Get Started</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Elite</div>
+        <div class="plan-name">Bot Enterprise</div>
+        <div class="plan-tagline">Fully managed AI trading infrastructure</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="3,999" data-yearly="2,999">3,999</span></div>
+        <div class="price-period billing-period" data-monthly="/ year" data-yearly="/ year (billed yearly)">/ year</div>
+        <div class="price-options">
+          <div class="price-option selected" onclick="selectOption(this)"><div class="po-left"><div class="po-radio"></div><span class="po-label">Annual Plan</span><span class="po-badge">Enterprise</span></div><span class="po-price billing-opt" data-monthly="$3,999" data-yearly="$2,999">$3,999</span></div>
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Dedicated AI bot instance</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Custom strategy configuration</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>All asset classes covered</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>CMT Analyst oversight</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Priority 24/7 support</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Monthly detailed P&L reports</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>API access available</strong></span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Contact Us</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ BUNDLE ============ -->
+<div class="pricing-section" id="tab-bundle">
+  <div style="text-align:center;margin-bottom:40px;">
+    <div style="font-size:12px;font-weight:700;color:var(--green-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">Best Value</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--white);margin-bottom:12px;">Bundle & Save More</h2>
+    <p style="font-size:15px;color:var(--text-muted);max-width:480px;margin:0 auto;line-height:1.7;">Combine multiple asset classes and save up to 40% compared to buying separately.</p>
+  </div>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Bundle</div>
+        <div class="plan-name">Crypto + Forex</div>
+        <div class="plan-tagline">Best of both worlds — crypto and currency markets</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="299" data-yearly="209">299</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:6px;padding:8px 12px;background:rgba(26,158,90,0.08);border-radius:8px;">
+          Save <strong style="color:var(--green-light)">$99/mo</strong> vs buying separately
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-divider">Crypto Included</div>
+        <div class="feature-item"><div class="check">✓</div><span>10–12 Crypto signals/month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Target up to 15% per trade</span></div>
+        <div class="feature-divider">Forex Included</div>
+        <div class="feature-item"><div class="check">✓</div><span>10–15 Forex signals/month</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Target 50–80 pips per trade</span></div>
+        <div class="feature-divider">Both Plans</div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Market Expert Support</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Free Newsletter</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Bundle</button></div>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="popular-badge">🔥 Best Value Bundle</div>
+      <div class="plan-header">
+        <div class="plan-tier">Bundle</div>
+        <div class="plan-name">All Markets Pro</div>
+        <div class="plan-tagline">Crypto + Forex + Gold — complete market access</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="449" data-yearly="314">449</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:6px;padding:8px 12px;background:rgba(26,158,90,0.1);border-radius:8px;">
+          Save <strong style="color:var(--green-light)">$198/mo</strong> vs buying separately
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-divider">Crypto Included</div>
+        <div class="feature-item"><div class="check">✓</div><span>10–12 Crypto signals/month</span></div>
+        <div class="feature-divider">Forex Included</div>
+        <div class="feature-item"><div class="check">✓</div><span>10–15 Forex signals/month</span></div>
+        <div class="feature-divider">Gold & COMEX Included</div>
+        <div class="feature-item"><div class="check">✓</div><span>XAU, XAG, WTI signals</span></div>
+        <div class="feature-divider">All Markets</div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Certified Analyst access</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Research Reports all assets</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Priority 24/7 Support</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp delivery</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-featured-plan">Get Bundle</button></div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-tier">Ultimate</div>
+        <div class="plan-name">All-In-One Elite</div>
+        <div class="plan-tagline">Every product. One price. Maximum edge.</div>
+        <div class="price-block"><span class="price-currency">$</span><span class="price-amount billing-price" data-monthly="699" data-yearly="489">699</span></div>
+        <div class="price-period billing-period" data-monthly="/ month" data-yearly="/ month (billed yearly)">/ month</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:6px;padding:8px 12px;background:rgba(26,158,90,0.08);border-radius:8px;">
+          Save <strong style="color:var(--green-light)">$448/mo</strong> vs buying separately
+        </div>
+      </div>
+      <div class="plan-features">
+        <div class="feature-item"><div class="check">✓</div><span>Crypto + Forex + Gold + Indices</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>AI Bot Pro</strong> included</span></div>
+        <div class="feature-item"><div class="check">✓</div><span>30+ signals per month total</span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>CMT Analyst dedicated</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Full research reports all assets</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Portfolio management included</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span><strong>Priority VIP support 24/7</strong></span></div>
+        <div class="feature-item"><div class="check">✓</div><span>Telegram + WhatsApp + Email</span></div>
+      </div>
+      <div class="plan-cta"><button class="btn-plan btn-outline-plan">Get Elite Bundle</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- GUARANTEE BANNER -->
+<div class="guarantee-banner">
+  <div class="guarantee-icon">🛡️</div>
+  <div class="guarantee-text">
+    <h3>Our Commitment to You</h3>
+    <p>Every signal we deliver is backed by CMT-certified analysis and AI verification. All our historical signals are published in public Track Sheet Records — full transparency, no excuses. If you have any questions before purchasing, our team is available 24/7.</p>
+  </div>
+  <div class="guarantee-cta">
+    <a href="contact.html" class="btn-guarantee">Talk to Us First →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-<div>Quick Links</div>
-<div>Services</div>
-<div>Contact Placeholder</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" style="margin-bottom:0;">
+        <div class="logo-icon">
+          <img src="images/logo.png" alt="HSV Trading Logo" width="52" height="52" style="border-radius:10px;object-fit:contain;">
+        </div>
+      </a>
+      <p>Premium AI-powered trading signals for Forex, Gold, Crypto and Indices. Your wealth, amplified.</p>
+      <div class="contact-info">
+        <a href="tel:+447455873054">📞 +44 7455 873054</a>
+        <a href="mailto:info@hsvtrading.com">✉️ info@hsvtrading.com</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a><a href="about.html">About Us</a>
+      <a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Crypto Signals</a><a href="#">Forex Signals</a>
+      <a href="#">Gold / COMEX</a><a href="#">AI Bot</a><a href="#">Portfolio Mgmt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Education</h4>
+      <a href="#">Crypto Basics</a><a href="#">Advanced Crypto</a>
+      <a href="#">Forex Basics</a><a href="#">Forex Pro</a><a href="#">Track Records</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HSV Trading Technologies. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.3)">Made with ❤️</span>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+  // Tab switching
+  function switchTab(id, btn) {
+    document.querySelectorAll('.pricing-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Price option selection
+  function selectOption(el) {
+    const card = el.closest('.plan-card');
+    card.querySelectorAll('.price-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // Billing toggle
+  let isYearly = false;
+  function toggleBilling() {
+    isYearly = !isYearly;
+    applyBilling();
+  }
+  function setBilling(type) {
+    isYearly = type === 'yearly';
+    applyBilling();
+  }
+  function applyBilling() {
+    const toggle = document.getElementById('billingToggle');
+    const lblM = document.getElementById('lbl-monthly');
+    const lblY = document.getElementById('lbl-yearly');
+    if (isYearly) {
+      toggle.classList.add('yearly');
+      lblM.classList.remove('active'); lblY.classList.add('active');
+    } else {
+      toggle.classList.remove('yearly');
+      lblM.classList.add('active'); lblY.classList.remove('active');
+    }
+    // Update all prices
+    document.querySelectorAll('.billing-price').forEach(el => {
+      el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
+    });
+    document.querySelectorAll('.billing-period').forEach(el => {
+      el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
+    });
+    document.querySelectorAll('.billing-opt').forEach(el => {
+      el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
+    });
+  }
+
+  // FAQ accordion
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+</script>
 </body>
 </html>
